@@ -54,16 +54,16 @@ class MrpIndicatorsBaseReport(models.Model):
         tools.drop_view_if_exists(cr, 'mrp_indicators_base_report')
         cr.execute("""
 create or replace view mrp_indicators_base_report as (
-select mp.id,to_char(mp.date_planned, 'YYYY-MM-DD') as date,mp.final_lot_id,
-wl.total_produced as qty, wl.prod_ratio, pt.container_id,
+select mp.id,to_date(to_char(mp.date_planned, 'YYYY-MM-DD'), 'YYYY-MM-DD') as date,mp.final_lot_id,
+wl.accond_total_produced as qty, wl.prod_ratio, pt.container_id,
 to_char(mp.date_planned, 'YYYY') as year,
 to_char(mp.date_planned, 'MM') as month,
-to_char(mp.date_planned, 'YYYY-MM-DD') as day, mp.company_id,
-wl.workcenter_id, mp.routing_id from
-mrp_production mp left join
+to_char(mp.date_planned, 'DD') as day, mp.company_id,
+wl.workcenter_id, mp.routing_id
+from mrp_production mp left join
 (select distinct on (production_id) * from mrp_production_workcenter_line
-order by production_id,sequence desc) wl
+where accond_total_produced != 0 order by production_id,sequence desc) wl
 on mp.id =  wl.production_id
 inner join product_product pp on pp.id = mp.product_id
 inner join product_template pt on pp.product_tmpl_id = pt.id
-where mp.final_lot_id is not null and mp.routing_id is not null)""")
+where mp.final_lot_id is not null and mp.routing_id is not null and wl.workcenter_id is not null)""")

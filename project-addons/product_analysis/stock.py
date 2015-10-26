@@ -43,13 +43,16 @@ class stock_production_lot(models.Model):
     analysis_notes = fields.Text('Analysis notes')
 
     # Samples fields
-    num_container_sample_proposed = fields.Integer('Proposed number of containers to sample')
+    num_container_sample_proposed = fields.Integer('Proposed number of \
+containers to sample')
     num_sampling_proposed = fields.Integer('Proposed number of samples')
 
-    num_container_sample_to_do = fields.Integer('Number of containers to sample')
+    num_container_sample_to_do = fields.Integer('Number of containers to \
+sample')
     num_sampling_to_do = fields.Integer('Number of samples')
 
-    num_container_sample_realized = fields.Integer('Number of containers sampled')
+    num_container_sample_realized = fields.Integer('Number of containers \
+sampled')
     num_sampling_realized = fields.Integer('Number of samples taked')
     sampling_notes = fields.Text('Sampling notes')
     sampling_date = fields.Date('Sampling date')
@@ -62,10 +65,11 @@ class stock_production_lot(models.Model):
         lot = super(stock_production_lot, self).create(vals)
         if lot.product_id.analytic_certificate:
             for line in lot.product_id.analysis_ids:
-                self.env['stock.lot.analysis'].create({'lot_id': lot.id,
-                                                       'analysis_id': line.analysis_id.id,
-                                                       'proposed': True,
-                                                       'show_in_certificate': line.show_in_certificate})
+                self.env['stock.lot.analysis'].create(
+                    {'lot_id': lot.id,
+                     'analysis_id': line.analysis_id.id,
+                     'proposed': True,
+                     'show_in_certificate': line.show_in_certificate})
         return lot
 
     @api.multi

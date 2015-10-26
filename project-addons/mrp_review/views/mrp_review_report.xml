@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="report_final_certificate_action"
+            string="Final certificate"
+            model="mrp.review.final"
+            report_type="qweb-pdf"
+            file="mrp_review.report_final_certificate"
+            name="mrp_review.report_final_certificate"
+        />
+
+        <report
+            id="report_quality_certificate_action"
+            string="Quality certificate"
+            model="mrp.review.quality"
+            report_type="qweb-pdf"
+            file="mrp_review.report_quality_certificate"
+            name="mrp_review.report_quality_certificate"
+        />
+    </data>
+</openerp>

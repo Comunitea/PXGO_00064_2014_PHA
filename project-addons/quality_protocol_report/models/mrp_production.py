@@ -39,8 +39,12 @@ class MrpProductProduce(models.TransientModel):
                 if wkcenter_line.workcenter_id.name not in docs_no_submited:
                     docs_no_submited.append(wkcenter_line.workcenter_id.name)
         if docs_no_submited:
-            raise exceptions.Warning(_('Document error'), _('Documents not submited: \n %s') % (','.join(docs_no_submited)))
-        return super(MrpProductProduce, self.with_context(no_return_operations=True)).do_produce()
+            raise exceptions.Warning(_('Document error'),
+                                     _('Documents not submited: \n %s') %
+                                     (','.join(docs_no_submited)))
+        return super(MrpProductProduce,
+                     self.with_context(no_return_operations=True)).do_produce()
+
 
 class MrpProduction(models.Model):
 
@@ -104,9 +108,14 @@ class MrpProduction(models.Model):
         if not protocol_type:
             raise exceptions.Warning(_('Protocol error'),
                                      _('continuation protocol type not found'))
-        assert len(protocol_type.workcenter_ids) == 1
+        if len(protocol_type.workcenter_ids) != 1:
+            raise exceptions.Warning(_('Workcenter not found'),
+                                     _('Workcenter not found'))
+        today_str = date.today().strftime('%d-%m-%Y')
+        line_name = '%s %s - %s' % (protocol_type.name, today_str,
+                                    self.product_id.name)
         workcenter_line_dict = {
-            'name': protocol_type.name + ' ' + date.today().strftime('%d-%m-%Y') + ' - ' + self.product_id.name,
+            'name': line_name,
             'production_id': self.id,
             'workcenter_id': protocol_type.workcenter_ids[0].id,
             'date_planned': date.today(),

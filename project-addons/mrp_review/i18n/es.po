@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-19 10:49+0000\n"
-"PO-Revision-Date: 2015-02-19 10:49+0000\n"
+"POT-Creation-Date: 2015-09-24 16:17+0000\n"
+"PO-Revision-Date: 2015-09-24 16:17+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,39 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Acceptance date"
+msgstr "Fecha de aceptación"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "According:"
+msgstr "Conforme:"
+
+#. module: mrp_review
+#: selection:mrp.review.quality,case:0
+#: selection:mrp.review.quality,paper:0
+#: selection:mrp.review.quality,tag:0
+#: selection:mrp.review.quality,thread:0
+#: view:website:mrp_review.report_quality_certificate
+msgid "Agreed"
+msgstr "Conforme"
+
+#. module: mrp_review
+#: view:mrp.review.quality:mrp_review.mrp_review_quality_form
+#: view:website:mrp_review.report_quality_certificate
+msgid "Analytic control"
+msgstr "Control analítico"
+
+#. module: mrp_review
 #: field:mrp.production,quality_analytical_issue:0
 msgid "Analytical issue"
 msgstr "Incidencias analíticas"
+
+#. module: mrp_review
+#: field:mrp.review.quality,calification:0
+msgid "Calification"
+msgstr "Conforme"
 
 #. module: mrp_review
 #: view:mrp.production:mrp_review.mrp_production_add_review
@@ -26,22 +56,110 @@ msgid "Cancel Production"
 msgstr "Cancelar fabricación"
 
 #. module: mrp_review
-#: code:addons/mrp_review/stock.py:59
-#, python-format
-msgid "Cannot consume a move with negative or zero quantity."
-msgstr "No se puede consumir un movimiento con cantidad menor o igual a 0."
+#: field:mrp.review.quality,case:0
+msgid "Case"
+msgstr "Estuche"
 
 #. module: mrp_review
-#: code:addons/mrp_review/mrp.py:124
-#: code:addons/mrp_review/stock.py:59
+#: view:website:mrp_review.report_quality_certificate
+msgid "Case:"
+msgstr "Estuche:"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_quality_certificate
+msgid "Code:"
+msgstr "Código:"
+
+#. module: mrp_review
+#: field:mrp.review.final,create_uid:0
+#: field:mrp.review.quality,create_uid:0
+msgid "Created by"
+msgstr "Created by"
+
+#. module: mrp_review
+#: field:mrp.review.final,create_date:0
+#: field:mrp.review.quality,create_date:0
+msgid "Created on"
+msgstr "Created on"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_quality_certificate
+msgid "DETERMINACION"
+msgstr "DETERMINACION"
+
+#. module: mrp_review
+#: selection:mrp.review.final,review_state:0
+#: selection:mrp.review.quality,review_state:0
+msgid "Done"
+msgstr "Finalizado"
+
+#. module: mrp_review
+#: view:mrp.review.final:mrp_review.mrp_review_final_filter
+#: selection:mrp.review.final,review_state:0
+#: view:mrp.review.quality:mrp_review.mrp_review_quality_filter
+#: selection:mrp.review.quality,review_state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_quality_certificate
+msgid "ESPECIFICACION"
+msgstr "ESPECIFICACION"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "End:"
+msgstr "Fin:"
+
+#. module: mrp_review
+#: code:addons/mrp_review/models/mrp.py:129
 #, python-format
 msgid "Error!"
 msgstr "Error!"
 
 #. module: mrp_review
+#: model:ir.ui.menu,name:mrp_review.menu_mrp_final_revision
+msgid "Final revisions"
+msgstr "Revisiones finales"
+
+#. module: mrp_review
 #: view:mrp.production:mrp_review.mrp_production_add_review
-msgid "Finish review"
-msgstr "Finalizar revisión"
+msgid "Finish production"
+msgstr "Finalizar producción"
+
+#. module: mrp_review
+#: field:mrp.review.final,id:0
+#: field:mrp.review.quality,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_quality_certificate
+msgid "LOT:"
+msgstr "LOTE:"
+
+#. module: mrp_review
+#: field:mrp.review.final,write_uid:0
+#: field:mrp.review.quality,write_uid:0
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: mrp_review
+#: field:mrp.review.final,write_date:0
+#: field:mrp.review.quality,write_date:0
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Lot"
+msgstr "Lote"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+#: view:website:mrp_review.report_quality_certificate
+msgid "Lot nº:"
+msgstr "Nº de lote:"
 
 #. module: mrp_review
 #: model:ir.model,name:mrp_review.model_mrp_production
@@ -49,10 +167,26 @@ msgid "Manufacturing Order"
 msgstr "Órden de producción"
 
 #. module: mrp_review
-#: code:addons/mrp_review/mrp.py:125
+#: code:addons/mrp_review/models/mrp.py:130
 #, python-format
 msgid "Manufacturing order cannot be started in state \"%s\"!"
-msgstr "La orden de fabricación no puede ser iniciada en el estado \"%s\"!"
+msgstr "Manufacturing order cannot be started in state \"%s\"!"
+
+#. module: mrp_review
+#: selection:mrp.review.quality,case:0
+#: selection:mrp.review.quality,paper:0
+#: selection:mrp.review.quality,tag:0
+#: selection:mrp.review.quality,thread:0
+msgid "N/A"
+msgstr "N/A"
+
+#. module: mrp_review
+#: selection:mrp.review.quality,case:0
+#: selection:mrp.review.quality,paper:0
+#: selection:mrp.review.quality,tag:0
+#: selection:mrp.review.quality,thread:0
+msgid "Not agreed"
+msgstr "No conforme"
 
 #. module: mrp_review
 #: field:mrp.production,production_review_notes:0
@@ -62,10 +196,25 @@ msgid "Notes"
 msgstr "Notas"
 
 #. module: mrp_review
-#: code:addons/mrp_review/stock.py:46
-#, python-format
-msgid "Please provide proper quantity."
-msgstr "Please provide proper quantity."
+#: view:website:mrp_review.report_final_certificate
+msgid "Notes:"
+msgstr "Notas:"
+
+#. module: mrp_review
+#: field:mrp.review.quality,paper:0
+msgid "Paper"
+msgstr "Papel"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_quality_certificate
+msgid "Paper:"
+msgstr "Papel:"
+
+#. module: mrp_review
+#: view:mrp.review.quality:mrp_review.mrp_review_quality_form
+#: view:website:mrp_review.report_quality_certificate
+msgid "Primary packaging"
+msgstr "Acondicionamiento primario"
 
 #. module: mrp_review
 #: field:mrp.production,quality_process_agreed:0
@@ -73,35 +222,115 @@ msgid "Process control"
 msgstr "Controles en proceso"
 
 #. module: mrp_review
+#: model:ir.model,name:mrp_review.model_product_category
+msgid "Product Category"
+msgstr "Categoría de producto"
+
+#. module: mrp_review
 #: model:ir.model,name:mrp_review.model_mrp_product_produce
 msgid "Product Produce"
 msgstr "Fabricar producto"
 
 #. module: mrp_review
-#: field:mrp.production,production_isssue:0
+#: view:website:mrp_review.report_final_certificate
+#: view:website:mrp_review.report_quality_certificate
+msgid "Product:"
+msgstr "Producto:"
+
+#. module: mrp_review
+#: field:mrp.review.final,production_id:0
+#: field:mrp.review.quality,production_id:0
+msgid "Production"
+msgstr "Producción"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Production date:"
+msgstr "Fecha de producción:"
+
+#. module: mrp_review
+#: field:mrp.production,production_issue:0
+#: view:website:mrp_review.report_final_certificate
 msgid "Production issue"
 msgstr "Incidencia de fabricación"
 
 #. module: mrp_review
 #: field:mrp.production,production_protocol_agreed:0
+#: view:website:mrp_review.report_final_certificate
 msgid "Production protocol"
 msgstr "Protocolo de fabricación"
 
 #. module: mrp_review
-#: view:mrp.production:mrp_review.mrp_production_add_review
-msgid "Production review"
-msgstr "Producción revisada"
+#: view:website:mrp_review.report_final_certificate
+msgid "Production ratio"
+msgstr "Ratio de producción"
 
 #. module: mrp_review
 #: view:mrp.production:mrp_review.mrp_production_add_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Production review"
+msgstr "Revisión producción"
+
+#. module: mrp_review
+#: model:ir.actions.report.xml,name:mrp_review.report_quality_certificate_action
+msgid "Quality certificate"
+msgstr "Certificado de calidad"
+
+#. module: mrp_review
+#: model:ir.actions.act_window,name:mrp_review.action_mrp_review_quality
+#: model:ir.ui.menu,name:mrp_review.menu_mrp_quality_rev
+#: view:mrp.production:mrp_review.mrp_production_add_review
+#: view:mrp.review.quality:mrp_review.mrp_review_quality_form
 msgid "Quality review"
-msgstr "Calidad revisada"
+msgstr "Revisión de calidad"
+
+#. module: mrp_review
+#: view:mrp.review.quality:mrp_review.mrp_review_quality_form
+#: view:mrp.review.quality:mrp_review.mrp_review_quality_tree
+msgid "Quality revision"
+msgstr "Revisión de calidad"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_quality_certificate
+msgid "RESULTADO"
+msgstr "RESULTADO"
+
+#. module: mrp_review
+#: field:mrp.review.quality,raw_lot_id:0
+msgid "Raw lot"
+msgstr "Lote materia prima"
+
+#. module: mrp_review
+#: view:mrp.review.quality:mrp_review.mrp_review_quality_form
+#: view:website:mrp_review.report_quality_certificate
+msgid "Raw material"
+msgstr "Materia prima"
+
+#. module: mrp_review
+#: field:product.category,raw_material_category:0
+msgid "Raw material category"
+msgstr "Categoría de materia prima"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Report nº:"
+msgstr "Report nº:"
 
 #. module: mrp_review
 #: field:mrp.production,production_review_by:0
 #: field:mrp.production,quality_review_by:0
 msgid "Revised by"
 msgstr "Revisado por"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Revised by:"
+msgstr "Revisado por:"
 
 #. module: mrp_review
 #: view:mrp.production:mrp_review.mrp_production_add_review
@@ -115,9 +344,19 @@ msgid "Revision Date"
 msgstr "Fecha de revisión"
 
 #. module: mrp_review
+#: view:website:mrp_review.report_quality_certificate
+msgid "Sgd. Quality control responsible"
+msgstr "Fdo. Responsable de control de calidad"
+
+#. module: mrp_review
 #: view:mrp.production:mrp_review.mrp_production_add_review
 msgid "Start production"
 msgstr "Iniciar producción"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Start:"
+msgstr "Inicio:"
 
 #. module: mrp_review
 #: field:mrp.production,quality_material_agreed:0
@@ -125,9 +364,30 @@ msgid "Starting material control"
 msgstr "Control materiales de partida"
 
 #. module: mrp_review
+#: field:mrp.review.final,review_state:0
+#: field:mrp.review.quality,review_state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: mrp_review
 #: model:ir.model,name:mrp_review.model_stock_move
 msgid "Stock Move"
 msgstr "Movimiento de existencias"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: mrp_review
+#: field:mrp.review.quality,tag:0
+msgid "Tag"
+msgstr "Etiqueta"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_quality_certificate
+msgid "Tag:"
+msgstr "Etiqueta:"
 
 #. module: mrp_review
 #: model:res.groups,name:mrp_review.technical_dir
@@ -135,15 +395,50 @@ msgid "Technical direction"
 msgstr "Dirección técnica"
 
 #. module: mrp_review
-#: code:addons/mrp_review/stock.py:46
-#, python-format
-msgid "Warning!"
-msgstr "Aviso!"
+#: field:mrp.review.quality,thread:0
+msgid "Thread"
+msgstr "Hilo"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_quality_certificate
+msgid "Thread:"
+msgstr "Hilo:"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Total Quantity:"
+msgstr "Cantidad total:"
+
+#. module: mrp_review
+#: view:mrp.review.final:mrp_review.mrp_review_final_form
+msgid "Traceability"
+msgstr "Trazabilidad"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "Traceability report:"
+msgstr "Informe de trazabilidad:"
 
 #. module: mrp_review
 #: model:ir.model,name:mrp_review.model_mrp_production_workcenter_line
 msgid "Work Order"
 msgstr "Orden de trabajo"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+#: view:website:mrp_review.report_quality_certificate
+msgid "YES"
+msgstr "SI"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_quality_certificate
+msgid "certificate of analysis from the finished product"
+msgstr "Certificado de análisis de producto acabado"
+
+#. module: mrp_review
+#: view:website:mrp_review.report_final_certificate
+msgid "certification and lot release"
+msgstr "Certificación y liberación de lote"
 
 #. module: mrp_review
 #: field:mrp.production,production_ratio_agreed:0
@@ -156,7 +451,26 @@ msgid "final product analytical control"
 msgstr "Controles analíticos producto final"
 
 #. module: mrp_review
+#: model:ir.actions.act_window,name:mrp_review.action_mrp_review_final
+#: model:ir.ui.menu,name:mrp_review.menu_mrp_final_rev
+#: view:mrp.review.final:mrp_review.mrp_review_final_form
+msgid "final review"
+msgstr "Revisión final"
+
+#. module: mrp_review
+#: view:mrp.review.final:mrp_review.mrp_review_final_form
+#: view:mrp.review.final:mrp_review.mrp_review_final_tree
+msgid "final revision"
+msgstr "Revisión final"
+
+#. module: mrp_review
 #: view:mrp.production:mrp_review.mrp_production_add_review
+msgid "finish review"
+msgstr "Finalizar revisión"
+
+#. module: mrp_review
+#: view:mrp.production:mrp_review.mrp_production_add_review
+#: view:mrp.review.final:mrp_review.mrp_review_final_form
 msgid "production review"
 msgstr "Revisión de producción"
 
@@ -164,15 +478,23 @@ msgstr "Revisión de producción"
 #: field:mrp.production,prod_review_ok:0
 #: field:mrp.production,qual_review_ok:0
 msgid "production reviewed"
-msgstr "production reviewed"
+msgstr "Producción revisada"
+
+#. module: mrp_review
+#: view:mrp.review.quality:mrp_review.mrp_review_quality_form
+#: view:website:mrp_review.report_quality_certificate
+msgid "qualification"
+msgstr "Calificación"
 
 #. module: mrp_review
 #: view:mrp.production:mrp_review.mrp_production_add_review
+#: view:mrp.review.final:mrp_review.mrp_review_final_form
 msgid "quality control review"
 msgstr "Revisión control calidad"
 
 #. module: mrp_review
 #: view:mrp.production:mrp_review.mrp_production_add_review
+#: view:mrp.review.final:mrp_review.mrp_review_final_form
 msgid "technical direction review"
 msgstr "Revisión dirección técnica"
 

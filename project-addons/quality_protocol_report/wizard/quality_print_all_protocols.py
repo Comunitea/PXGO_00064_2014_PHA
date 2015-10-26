@@ -42,26 +42,34 @@ class QualityReportAll(models.TransientModel):
             base_url = self.env['ir.config_parameter'].\
                 get_param('web.base.url')
         if self.env.context['active_model'] == u'stock.production.lot':
-            obj_id = self.env['mrp.production'].search([('final_lot_id', '=', self.env.context['active_id'])])
+            obj_id = self.env['mrp.production'].search(
+                [('final_lot_id', '=', self.env.context['active_id'])])
         else:
-            obj = self.env[self.env.context['active_model']].browse(self.env.context['active_id'])
+            obj = self.env[self.env.context['active_model']].browse(
+                self.env.context['active_id'])
 
         use_protocol = False
         for workcenter_line in obj.workcenter_lines:
             for protocol in obj.product_id.protocol_ids:
-                if protocol.type_id.id == workcenter_line.workcenter_id.protocol_type_id.id:
+                if protocol.type_id.id == \
+                        workcenter_line.workcenter_id.protocol_type_id.id:
                     use_protocol = protocol
             if not use_protocol:
-                raise exceptions.except_orm(_('Not found'), _('Protocol not found for the product %s.') % obj.product_id.name)
+                raise exceptions.except_orm(
+                    _('Not found'),
+                    _('Protocol not found for the product %s.') %
+                    obj.product_id.name)
             if not workcenter_line.realized_ids:
                 for line in use_protocol.report_line_ids:
                     if line.log_realization:
                         self.env['quality.realization'].create(
-                             {
+                            {
                                 'name': line.name,
                                 'workcenter_line_id': workcenter_line.id
                             })
-            res.append(urljoin(base_url, "protocol/print/%s/%s/%s" % (slug(obj), slug(use_protocol), slug(workcenter_line))))
+            res.append(urljoin(base_url, "protocol/print/%s/%s/%s" % (
+                               slug(obj), slug(use_protocol),
+                               slug(workcenter_line))))
         return res
 
     def _merge_pdf(self, documents):
@@ -71,7 +79,8 @@ class QualityReportAll(models.TransientModel):
         :returns: path of the merged pdf
         """
         writer = PdfFileWriter()
-        streams = []  # We have to close the streams *after* PdfFilWriter's call to write()
+        # We have to close the streams *after* PdfFilWriter's call to write()
+        streams = []
         for document in documents:
             pdfreport = file(document, 'rb')
             streams.append(pdfreport)
@@ -79,7 +88,8 @@ class QualityReportAll(models.TransientModel):
             for page in range(0, reader.getNumPages()):
                 writer.addPage(reader.getPage(page))
 
-        merged_file_fd, merged_file_path = tempfile.mkstemp(suffix='.pdf', prefix='report.merged.tmp.')
+        merged_file_fd, merged_file_path = tempfile.mkstemp(
+            suffix='.pdf', prefix='report.merged.tmp.')
         with closing(os.fdopen(merged_file_fd, 'w')) as merged_file:
             writer.write(merged_file)
 
@@ -91,29 +101,36 @@ class QualityReportAll(models.TransientModel):
     @api.multi
     def print_all(self):
         """
-            Se llama al script static/src/js/get_url_pdf.js con los argumentos session_id, directorio donde guardar, urls que crea 1 pdf por cada url
+            Se llama al script static/src/js/get_url_pdf.js con los argumentos
+            session_id, directorio donde guardar, urls que crea 1 pdf por
+            cada url.
             Luego se hace merge de los pdf desde esta parte.
         """
         if not request:
             raise exceptions.Warning(_(''), _(''))
         session_id = request.session.sid
         addons_url = self.env['ir.config_parameter'].get_param('addons_path')
-        phantom = ["phantomjs", addons_url + "/quality_protocol_report/static/src/js/phantom_url_to_pdf.js", session_id, "/tmp"] + self._get_print_urls()
+        phantom = ["phantomjs", addons_url +
+                   "/quality_protocol_report/static/src/js/phantom_url_to_pdf.js",
+                   session_id, "/tmp"] + self._get_print_urls()
         process = subprocess.Popen(phantom)
         output = process.communicate()
         filenames = []
         for url in self._get_print_urls():
-            filenames.append('/tmp/' + url.replace('/', '').replace(':', '') + '.pdf')
+            filenames.append('/tmp/' + url.replace('/', '').replace(':', '') +
+                             '.pdf')
         filepath = self._merge_pdf(filenames)
-        fildecode=open(filepath,"r")
+        fildecode = open(filepath, "r")
         encode_data = fildecode.read()
         fildecode.close()
         attachment_data = {
-                    'name': 'quality_protocols' + str(self.env.context.get('active_id', '')) + '.pdf',
-                    'datas_fname': 'quality_protocols' + str(self.env.context.get('active_id', '')) + '.pdf',
-                    'datas': base64.b64encode(encode_data),
-                    'res_model': self.env.context.get('active_model', False),
-                    'res_id': self.env.context.get('active_id', False),
+            'name': 'quality_protocols' +
+            str(self.env.context.get('active_id', '')) + '.pdf',
+            'datas_fname': 'quality_protocols' +
+            str(self.env.context.get('active_id', '')) + '.pdf',
+            'datas': base64.b64encode(encode_data),
+            'res_model': self.env.context.get('active_model', False),
+            'res_id': self.env.context.get('active_id', False),
             }
         self.env['ir.attachment'].search(
             [('name', '=', attachment_data['name']),

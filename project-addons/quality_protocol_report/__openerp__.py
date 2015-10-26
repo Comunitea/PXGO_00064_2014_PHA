@@ -51,8 +51,6 @@
              'views/mrp_view.xml',
              'views/survey_view.xml',
              'views/mrp_workcenter_line_view.xml',
-             'views/mrp_indicators_base_report_view.xml',
-             'security/ir.model.access.csv',
-             'security/quality_protocol_report_security.xml'],
+             'security/ir.model.access.csv'],
     "installable": True
 }

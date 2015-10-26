@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import models, api, _, exceptions
+from openerp import models, api, _, exceptions, fields as fields2
 from openerp.osv import fields
 from datetime import date
 
@@ -46,7 +46,7 @@ class MrpProduction(models.Model):
                 When the production is over, the status is set to 'Done'."),
         'production_protocol_agreed': fields.boolean('Production protocol'),
         'production_ratio_agreed': fields.boolean('dosage and manufacturing ratios'),
-        'production_isssue': fields.boolean('Production issue'),
+        'production_issue': fields.boolean('Production issue'),
         'production_review_by': fields.char('Revised by'),
         'production_review_notes': fields.text('Notes'),
         'production_review_date': fields.date('Revision Date'),
@@ -60,6 +60,9 @@ class MrpProduction(models.Model):
         'tech_notes': fields.text('Notes'),
         'prod_review_ok': fields.boolean('production reviewed'),
         'qual_review_ok': fields.boolean('production reviewed'),
+        'start_date': fields.datetime('Start date'),
+        'end_date': fields.datetime('End date'),
+        'production_log_ids': fields.one2many('mrp.production.log', 'production_id', 'Production log')
     }
 
     def copy(self, cr, uid, id, default={}, context=None):
@@ -75,7 +78,7 @@ class MrpProduction(models.Model):
         default['production_review_date'] = False
         default['production_review_notes'] = False
         default['production_review_by'] = False
-        default['production_isssue'] = False
+        default['production_issue'] = False
         default['production_ratio_agreed'] = False
         default['production_protocol_agreed'] = False
         return super(MrpProduction, self).copy(cr, uid, id, default, context)
@@ -103,6 +106,18 @@ class MrpProduction(models.Model):
         self.write({'quality_review_by': self.env.user.partner_id.name,
                     'quality_review_date': date.today(),
                     'qual_review_ok': True})
+
+
+class MrpProductionLog(models.Model):
+
+    _name = 'mrp.production.log'
+
+    production_id = fields2.Many2one('mrp.production', 'Production')
+    date = fields2.Date('Date', required=True)
+    start_hour = fields2.Float('Start hour', required=True)
+    end_hour = fields2.Float('End hour', required=True)
+    total_qty = fields2.Integer('Total produced', required=True)
+    worker = fields2.Char('Worker', required=True)
 
 
 class MrpProductionWorkcenterLine(models.Model):
@@ -139,7 +154,6 @@ class MrpProductionWorkcenterLine(models.Model):
                                             'consume_produce')
                 prod_obj.signal_workflow('button_produce_done')
         return
-
 
 class mrp_product_produce(models.TransientModel):
     _inherit = 'mrp.product.produce'

@@ -76,7 +76,7 @@ class StockMove(models.Model):
                     if lot_id.state != 'approved':
                         errors += '\n' + _('Cannot move to stock, \
 the lot %s is in %s state') % (lot_id.name, lot_id.state)
-                elif source_location in input_locs and  \
+                elif source_location in input_locs and \
                         dest_location in stock_locs:
                     lot_id.signal_workflow('direct_approved')
         if errors:

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="mrp_review_quality_tree" model="ir.ui.view">
+            <field name="name">mrp.review.quality.tree</field>
+            <field name="model">mrp.review.quality</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Quality revision">
+                    <field name="state" invisible="1"/>
+                    <field name="final_lot_id"/>
+                    <field name="name"/>
+                    <field name="review_state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mrp_review_quality_form" model="ir.ui.view">
+            <field name="name">mrp.review.quality.form</field>
+            <field name="model">mrp.review.quality</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Quality revision">
+                    <header>
+                        <field name="qual_review_ok" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                        <button name="quality_review" string="Quality review" type="object"
+                                attrs="{'invisible': ['|', ('state', 'not in', ('in_review')), ('qual_review_ok', '=', True)]}"/>
+                        <field name="review_state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="production_id"/>
+                            <field name="product_id"/>
+                            <field name="final_lot_id"/>
+                            <group string="Raw material">
+                                <field name="raw_product_id"/>
+                                <field name="raw_lot_id"/>
+                            </group>
+                            <group string="Analytic control" colspan="4">
+                                <field name="analysis_ids">
+                                    <tree>
+                                        <field name="analysis_id"/>
+                                        <field name="result"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Primary packaging">
+                                <field name="case"/>
+                                <field name="tag"/>
+                                <field name="thread"/>
+                                <field name="paper"/>
+                            </group>
+                            <group string="qualification">
+                                <field name="calification"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mrp_review_quality_filter" model="ir.ui.view">
+            <field name="name">mrp.review.quality.form</field>
+            <field name="model">mrp.review.quality</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="">
+                    <field name="product_id"/>
+                    <field name="final_lot_id"/>
+                    <field name="review_state"/>
+                    <filter string="Draft" name="draft" domain="[('review_state','=','draft')]"/>
+               </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_mrp_review_quality">
+            <field name="name">Quality review</field>
+            <field name="res_model">mrp.review.quality</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="mrp_review_quality_tree"/>
+            <field name="search_view_id" ref="mrp_review_quality_filter"/>
+            <field name="context">{'search_default_draft': 1}</field>
+        </record>
+
+        <menuitem id="menu_mrp_quality_rev" name="Quality review" string="Quality review"
+            action="action_mrp_review_quality" parent="menu_mrp_final_revision" sequence="2"/>
+
+    </data>
+</openerp>

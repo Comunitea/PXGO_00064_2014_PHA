@@ -9,9 +9,9 @@
                 <tree string="Production indicators base">
                     <field name="date"/>
                     <field name="final_lot_id"/>
+                    <field name="container_id"/>
                     <field name="qty"/>
                     <field name="prod_ratio"/>
-                    <field name="container_id"/>
                     <field name="workcenter_id"/>
                     <field name="routing_id"/>
                     <field name="year" invisible="1"/>

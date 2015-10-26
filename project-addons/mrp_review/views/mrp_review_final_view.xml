@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="mrp_review_final_tree" model="ir.ui.view">
+            <field name="name">mrp.review.final.tree</field>
+            <field name="model">mrp.review.final</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="final revision">
+                    <field name="state" invisible="1"/>
+                    <field name="final_lot_id"/>
+                    <field name="name"/>
+                    <field name="review_state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mrp_review_final_form" model="ir.ui.view">
+            <field name="name">mrp.review.final.form</field>
+            <field name="model">mrp.review.final</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="final revision">
+                    <header>
+                        <field name="qual_review_ok" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                        <button name="final_review" string="final review" type="object"
+                                attrs="{'invisible': ['|', ('state', 'not in', ('in_review')), ('qual_review_ok', '=', True)]}"/>
+                        <field name="review_state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="production_id"/>
+                            <field name="product_id"/>
+                            <field name="final_lot_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <group string="Traceability" colspan="4">
+                                <field name="move_lines2">
+                                    <tree>
+                                        <field name="state" invisible="1"/>
+                                        <field name="product_id"/>
+                                        <field name="restrict_lot_id"/>
+                                        <field name="product_uom_qty"/>
+                                        <field name="lot_supplier_id"/>
+                                        <field name="acceptance_date"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="production review" attrs="{'readonly': [('prod_review_ok', '=', True)]}">
+                                <field name="production_protocol_agreed"/>
+                                <field name="production_ratio_agreed"/>
+                                <field name="production_issue"/>
+                                <field name="production_review_by"/>
+                                <field name="production_review_date"/>
+                                <field name="production_review_notes"/>
+                            </group>
+                            <group string="quality control review" attrs="{'readonly': [('qual_review_ok', '=', True)]}">
+                                <field name="quality_material_agreed"/>
+                                <field name="quality_process_agreed"/>
+                                <field name="quality_analytical_agreed"/>
+                                <field name="quality_analytical_issue"/>
+                                <field name="quality_review_by"/>
+                                <field name="quality_review_date"/>
+                                <field name="quality_review_notes"/>
+                            </group>
+                            <group colspan="4" string="technical direction review" groups="mrp_review.technical_dir">
+                                <field name="prod_review_ok"/>
+                                <field name="qual_review_ok"/>
+                                <field name="tech_notes"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mrp_review_final_filter" model="ir.ui.view">
+            <field name="name">mrp.review.final.form</field>
+            <field name="model">mrp.review.final</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="">
+                    <field name="product_id"/>
+                    <field name="final_lot_id"/>
+                    <field name="review_state"/>
+                    <filter string="Draft" name="draft" domain="[('review_state','=','draft')]"/>
+               </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_mrp_review_final">
+            <field name="name">final review</field>
+            <field name="res_model">mrp.review.final</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="mrp_review_final_tree"/>
+            <field name="search_view_id" ref="mrp_review_final_filter"/>
+            <field name="context">{'search_default_draft': 1}</field>
+        </record>
+
+        <menuitem id="menu_mrp_final_rev" name="final review" string="final review"
+            action="action_mrp_review_final" parent="menu_mrp_final_revision" sequence="3"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_quality_certificate">
+            <style>
+                .box{
+                    outline: 1px solid black;
+                }
+                .bol-box{
+                    height:13px;
+                    width:13px;
+                    border: 1px solid black;
+                    margin-right:5px;
+                    display: inline-block;
+                }
+                h3{
+                    text-decoration: underline
+                }
+            </style>
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="header">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <img t-if="res_company.logo"
+                                    t-att-src="'data:image/png;base64,%s' % res_company.logo"
+                                    style="max-height: 45px;"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <h2>certificate of analysis from the finished product</h2>
+                            </div>
+                        </div>
+                        <div class="row box">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <p>Product: <span t-field="o.product_id.name"/></p>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <p>Lot nº: <span t-field="o.final_lot_id"/></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p>Code: <span t-field="o.product_id.default_code"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12"><h3>Raw material</h3></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <span t-field="o.raw_product_id.name"/>
+                            </div>
+                            <div class="col-xs-4">
+                                <p>LOT: <span t-field="o.raw_lot_id"/></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3>Analytic control</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table">
+                                <thead>
+                                    <th>DETERMINACION</th>
+                                    <th>ESPECIFICACION</th>
+                                    <th>RESULTADO</th>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.analysis_ids" t-as="analysis">
+                                        <t t-if="analysis.show_in_certificate">
+                                            <tr>
+                                                <td><span t-field="analysis.analysis_id"/></td>
+                                                <td><span t-field="analysis.analysis_id.method"/></td>
+                                                <td><span t-field="analysis.result"/></td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3>Primary packaging</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3"><p>Case: <span t-field="o.case"/></p></div>
+                            <div class="col-xs-3"><p>Tag: <span t-field="o.tag"/></p></div>
+                            <div class="col-xs-3"><p>Thread: <span t-field="o.thread"/></p></div>
+                            <div class="col-xs-3"><p>Paper: <span t-field="o.paper"/></p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3>qualification</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-1 col-xs-offset-3">YES</div>
+                            <div class="col-xs-1"> </div>
+                            <div class="col-xs-1">NO</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">Agreed</div>
+                            <div class="col-xs-1"><p t-if="o.calification">X</p></div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-1"><p t-if="not o.calification">X</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 col-xs-offset-8">
+                                <p>Sgd. Quality control responsible</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

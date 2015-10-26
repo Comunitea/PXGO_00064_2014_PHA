@@ -63,6 +63,7 @@ be returned on produce""", digits=dp.get_precision('Product Unit of Measure'))
     hoard_initials_return = fields.Char('Initials')
     acceptance_date = fields.Date('Acceptance date', readonly=True,
                                   related='lot_id.acceptance_date')
+    container_type = fields.Many2one('stock.container.type', 'Container type', related='lot_id.container_type')
 
     @api.model
     def create(self, vals):

@@ -25,13 +25,28 @@
                 <button name="button_cancel" position="replace">
                     <button name="button_cancel" states="draft,ready,in_production,wait_release" string="Cancel Production"/>
                 </button>
+                <field name="priority" position="after">
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </field>
                 <notebook position="inside">
+                    <page string="Production log">
+                        <field name="production_log_ids" colspan="4">
+                            <tree editable="top">
+                                <field name="date"/>
+                                <field name="start_hour" widget="float_time"/>
+                                <field name="end_hour" widget="float_time"/>
+                                <field name="total_qty"/>
+                                <field name="worker"/>
+                            </tree>
+                        </field>
+                    </page>
                     <page string="Revision" states="in_review,wait_release,done">
                         <group>
                             <group string="production review" attrs="{'readonly': [('prod_review_ok', '=', True)]}">
                                 <field name="production_protocol_agreed"/>
                                 <field name="production_ratio_agreed"/>
-                                <field name="production_isssue"/>
+                                <field name="production_issue"/>
                                 <field name="production_review_by"/>
                                 <field name="production_review_date"/>
                                 <field name="production_review_notes"/>

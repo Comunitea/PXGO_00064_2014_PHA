@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_final_certificate">
+            <style>
+                .box{
+                    outline: 1px solid black;
+                }
+                .bol-box{
+                    height:13px;
+                    width:13px;
+                    border: 1px solid black;
+                    margin-right:5px;
+                    display: inline-block;
+                }
+                .notes{
+                    min-height: 32px;
+                }
+                .section{
+                    page-break-inside: avoid;
+                }
+                .doublebox{
+                    min-height:60px;
+                    border: medium double black;
+                }
+            </style>
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="header">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <img t-if="res_company.logo"
+                                    t-att-src="'data:image/png;base64,%s' % res_company.logo"
+                                    style="max-height: 45px;"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-12 text-center box">
+                                <h2>certification and lot release</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8 box">
+                                <p>Product: <span t-field="o.product_id"/></p>
+                            </div>
+                            <div class="col-xs-4 box">
+                                <p>Lot nº: <span t-field="o.final_lot_id"/></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8 box">
+                                <div class="col-xs-6">
+                                    <p>Production date:</p>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="row">Start: <span t-field="o.start_date"/></div>
+                                    <div class="row">End: <span t-field="o.end_date"/></div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 box">
+                                <p> </p>
+                                <p>Total Quantity: </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 box">
+                                <p>Traceability report:</p>
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <th></th>
+                                        <th>Lot</th>
+                                        <th>Quantity</th>
+                                        <th>Supplier</th>
+                                        <th>Acceptance date</th>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.move_lines2" t-as="line">
+                                            <tr>
+                                                <td><span t-field="line.product_id"/></td>
+                                                <td><span t-field="line.restrict_lot_id"/></td>
+                                                <td><span t-field="line.product_uom_qty"/></td>
+                                                <td><span t-field="line.restrict_lot_id.partner_id"/></td>
+                                                <td><span t-field="line.restrict_lot_id.acceptance_date"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h3>Production review</h3>
+                                </div>
+                            </div>
+                            <div class="row box">
+                                <div class="row">
+                                    <div class="col-xs-12"><p>According:</p></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"></div>
+                                    <div class="col-xs-1">YES</div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">NO</div>
+                                    <div class="col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><ul><li>Production protocol</li></ul></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="o.production_protocol_agreed">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="not o.production_protocol_agreed">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><ul><li>Production ratio</li></ul></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="o.production_ratio_agreed">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="not o.production_ratio_agreed">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><ul><li>Production issue</li></ul></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="o.production_issue">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="not o.production_issue">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">Report nº:</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8 box notes">
+                                    <p>Notes:</p>
+                                    <span t-field="o.production_review_notes"/>
+                                </div>
+                                <div class="col-xs-4 box notes">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <p>Revised by:</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <span t-field="o.production_review_by"/>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <span t-field="o.production_review_date"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h3>Quality control review</h3>
+                                </div>
+                            </div>
+                            <div class="row box">
+                                <div class="row">
+                                    <div class="col-xs-12"><p>According:</p></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"></div>
+                                    <div class="col-xs-1">YES</div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">NO</div>
+                                    <div class="col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><ul><li>Raw material control</li></ul></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="o.quality_material_agreed">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="not o.quality_material_agreed">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><ul><li>Process control</li></ul></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="o.quality_process_agreed">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="not o.quality_process_agreed">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><ul><li>final product analytical control</li></ul></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="o.quality_analytical_agreed">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="not o.quality_analytical_agreed">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><ul><li>Analytical issue</li></ul></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="o.quality_analytical_issue">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="not o.quality_analytical_issue">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">Report nº:</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8 box notes">
+                                    <p>Notes:</p>
+                                    <span t-field="o.quality_review_notes"/>
+                                </div>
+                                <div class="col-xs-4 box notes">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <p>Revised by:</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <span t-field="o.quality_review_by"/>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <span t-field="o.quality_review_date"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h3>Technical direction review</h3>
+                                </div>
+                            </div>
+                            <div class="row box">
+                                <div class="row">
+                                    <div class="col-xs-12"><p>According:</p></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"></div>
+                                    <div class="col-xs-1">YES</div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">NO</div>
+                                    <div class="col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><ul><li>Production documentation</li></ul></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="o.prod_review_ok">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="not o.prod_review_ok">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><ul><li>Quality control documentation</li></ul></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="o.qual_review_ok">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1"></div>
+                                    <div class="col-xs-1">
+                                        <div>
+                                            <t t-if="not o.qual_review_ok">X</t>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 box notes">
+                                    <p>Notes:</p>
+                                    <span t-field="o.tech_notes"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:40px">
+                            <div class="col-xs-4 doublebox text-center">
+                                <t t-if="o.state in ('wait_release', 'done')">
+                                    <h2>ACEPTADO</h2>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 col-xs-offset-8 text-center">
+                                <p>Sgd. technical direction</p>
+                                <p><span t-usertime="%d/%m/%Y"/> </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
